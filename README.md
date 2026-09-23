@@ -7,7 +7,7 @@ a classical TF-IDF baseline, and serve the best model in a web app. The app also
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ezechis/pidgin-sentiment/blob/main/notebooks/train_pidgin_sentiment.ipynb)
 
-- **Live demo:** https://huggingface.co/spaces/ezechinnabugwu/pidgin-sentiment
+- **Live demo:** https://pidgin-sentiment.streamlit.app
 - **Model:** https://huggingface.co/ezechinnabugwu/pidgin-sentiment-model
 
 ## What is learned vs. rule-based
@@ -39,9 +39,15 @@ Test set = cleaned test split (3,228 tweets). Headline metric: macro-F1.
 
 | Model | Accuracy | Macro-F1 | Macro-F1 on official (leaky) split |
 |---|---|---|---|
+| **AfriBERTa-large (deployed)** | **0.630** | **0.434** | 0.468 |
 | TF-IDF + Logistic Regression (baseline) | 0.616 | 0.428 | 0.466 |
-| mBERT | _after Colab run_ | | |
-| AfriBERTa-large | _after Colab run_ | | |
+| mBERT | 0.623 | 0.422 | 0.462 |
+
+Trained on a Colab T4 GPU: 4 epochs, learning rate 2e-5, batch size 32, class-weighted loss
+(about 3.5 minutes per transformer). AfriBERTa-large (126M parameters) edges out both mBERT
+(178M) and the baseline, but the margin is small. Macro-F1 is held down by the neutral class,
+which none of the models learn from only 66 training examples. Removing train/test overlap
+lowers every model's score by about 3–4 points, which shows how much the official split flatters results.
 
 Confusion matrices, learning curves and the full error list are produced by the notebook.
 
@@ -49,7 +55,8 @@ Confusion matrices, learning curves and the full error list are produced by the 
 
 ```
 notebooks/train_pidgin_sentiment.ipynb   data -> baseline -> fine-tuning -> evaluation -> publish
-app/app.py                               Gradio web app (Hugging Face Space entry point)
+streamlit_app.py                         web app (Streamlit Community Cloud entry point)
+app/engine.py                            model sentiment + rules, UI-independent
 app/rules.py                             intent + moderation rules
 app/preprocess.py                        normalises input to match the training text
 tests/                                   pytest suite for rules, preprocessing and the app
@@ -60,6 +67,12 @@ data/                                    local copy of the NaijaSenti TSVs (git-
 
 1. Open the notebook in Colab (badge above), set **Runtime → T4 GPU**, then **Run all**.
 2. Optional: to publish the model, add a Hugging Face write token as the Colab secret `HF_TOKEN`.
+
+Run the web app locally (downloads the model from the Hub on first run):
+
+```bash
+pip install -r requirements.txt && streamlit run streamlit_app.py
+```
 
 Run the tests locally:
 
