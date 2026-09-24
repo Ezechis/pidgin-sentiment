@@ -1,0 +1,4 @@
+[server]
+# The watcher walks every imported module; on transformers that triggers
+# optional torchvision imports and floods the log with ModuleNotFoundError.
+fileWatcherType = "none"
