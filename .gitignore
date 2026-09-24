@@ -8,3 +8,4 @@ notebooks/outputs_smoke/
 outputs_smoke_run.ipynb
 *.pyc
 data/
+thesis_figures/
