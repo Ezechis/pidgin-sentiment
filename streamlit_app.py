@@ -15,6 +15,7 @@ from engine import analyze  # noqa: E402
 MODEL_ID = os.environ.get("MODEL_ID", "ezechinnabugwu/pidgin-sentiment-model")
 REPO_URL = "https://github.com/Ezechis/pidgin-sentiment"
 EMOJI = {"negative": "🔴", "neutral": "🟡", "positive": "🟢"}
+BAR_COLOR = {"negative": "#e5484d", "neutral": "#f5a524", "positive": "#30a46c"}
 EXAMPLES = [
     "Sapa dey choke me since morning, this economy heavy.",
     "Abeg track my order, delivery rider dey use me play.",
@@ -32,6 +33,20 @@ def load_classifier():
     from transformers import pipeline
 
     return pipeline("text-classification", model=MODEL_ID, top_k=None, device=-1)
+
+
+def confidence_bars(sentiment):
+    """Solid, labelled bars (st.progress renders too faintly to read in screenshots)."""
+    rows = []
+    for label, score in sentiment.items():
+        rows.append(
+            f'<div style="display:flex;align-items:center;gap:10px;margin:6px 0">'
+            f'<span style="width:95px">{EMOJI[label]} {label}</span>'
+            f'<div style="flex:1;background:rgba(128,128,128,0.25);border-radius:4px;height:18px">'
+            f'<div style="width:{score:.1%};background:{BAR_COLOR[label]};height:100%;border-radius:4px"></div>'
+            f'</div><span style="width:44px;text-align:right">{score:.0%}</span></div>'
+        )
+    return "".join(rows)
 
 
 st.title("🇳🇬 Pidgin Sentiment Engine")
@@ -65,8 +80,7 @@ if text.strip():
     else:
         top = result["top_label"]
         st.subheader(f"Sentiment (model): {EMOJI[top]} {top}")
-        for label, score in result["sentiment"].items():
-            st.progress(score, text=f"{EMOJI[label]} {label}: {score:.0%}")
+        st.markdown(confidence_bars(result["sentiment"]), unsafe_allow_html=True)
 
         left, right = st.columns(2)
         with left:
