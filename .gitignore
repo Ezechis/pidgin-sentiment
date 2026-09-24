@@ -9,3 +9,4 @@ outputs_smoke_run.ipynb
 *.pyc
 data/
 thesis_figures/
+outputs_*.csv
