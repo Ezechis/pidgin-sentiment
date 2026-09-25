@@ -106,13 +106,15 @@ with st.expander("About this model"):
 | Intent | Keyword rules (no labelled Pidgin intent dataset exists yet) |
 | Moderation | Whole-word abuse lexicon (insults, curses, threats) |
 
-**Test-set performance** (3,228 held-out tweets, train overlap removed): accuracy 0.630, macro-F1 0.434.
-The TF-IDF baseline scores macro-F1 0.428 and mBERT 0.422.
+**Test-set performance** (3,228 held-out tweets, train overlap removed): accuracy 0.625, macro-F1 0.476.
+The deployed model was also trained on 280 extra examples checked by native speakers (about 100 BBC
+News Pidgin sentences and 180 AI-drafted messages), which lifted neutral F1 from 0.00 to 0.14.
+For comparison: TF-IDF baseline 0.428, mBERT 0.422, AfriBERTa without the extra data about 0.43.
 
 Input is normalised the way the training tweets were (lower-case; no URLs, handles, digits,
 punctuation or emoji) before it reaches the model.
 
-**Known limits:** the *neutral* class (only 66 training tweets) is rarely predicted; sarcasm,
+**Known limits:** the *neutral* class is still the weakest (about 8% of neutral tweets recognised); sarcasm,
 mixed sentiment and complaint phrasings like *"dey use me play"* are often misread.
 Intent and moderation only recognise listed terms.
 

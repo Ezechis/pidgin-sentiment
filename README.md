@@ -39,7 +39,7 @@ Test set = cleaned test split (3,228 tweets). Headline metric: macro-F1.
 
 | Model | Accuracy | Macro-F1 | Macro-F1 on official (leaky) split |
 |---|---|---|---|
-| **AfriBERTa-large (deployed)** | **0.630** | **0.434** | 0.468 |
+| AfriBERTa-large (first run) | 0.630 | 0.434 | 0.468 |
 | TF-IDF + Logistic Regression (baseline) | 0.616 | 0.428 | 0.466 |
 | mBERT | 0.623 | 0.422 | 0.462 |
 
