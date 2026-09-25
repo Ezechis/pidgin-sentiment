@@ -49,6 +49,22 @@ Trained on a Colab T4 GPU: 4 epochs, learning rate 2e-5, batch size 32, class-we
 which none of the models learn from only 66 training examples. Removing train/test overlap
 lowers every model's score by about 3–4 points, which shows how much the official split flatters results.
 
+### Improving the neutral class
+
+No model above predicts neutral (66 training examples). The group checked 299 extra sentences in a
+shared sheet (about 120 from BBC News Pidgin, 180 AI-drafted customer messages); 280 were usable.
+They were added to **training only**. The test set is unchanged.
+
+| AfriBERTa-large | Accuracy | Macro-F1 | F1 neutral |
+|---|---|---|---|
+| Original training data | 0.622 | 0.426 | 0.000 |
+| + confidence threshold for neutral (tuned on dev) | 0.622 | 0.429 | 0.009 |
+| **+ 280 checked extra rows (deployed)** | **0.625** | **0.476** | **0.136** |
+| + extra rows + threshold | 0.618 | 0.479 | 0.156 |
+
+The deployed model was chosen on dev macro-F1 (0.4289 → 0.4342), never on the test set. The same
+original recipe scored 0.434 and 0.426 in two runs, so run-to-run noise is about ±0.01.
+
 Confusion matrices, learning curves and the full error list are produced by the notebook.
 
 ## Repository layout
