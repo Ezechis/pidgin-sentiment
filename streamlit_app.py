@@ -13,6 +13,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "app
 from engine import analyze  # noqa: E402
 
 MODEL_ID = os.environ.get("MODEL_ID", "ezechinnabugwu/pidgin-sentiment-model")
+# Pinned to the round-1 extra-data model (Hub commit of 2026-09-25): later training runs may push
+# weaker models to the same repo, and the app must only change when we deliberately move this pin.
+MODEL_REVISION = os.environ.get("MODEL_REVISION", "049707fb032982cb1e7bc3074e6961a86d3e4ff3")
 REPO_URL = "https://github.com/Ezechis/pidgin-sentiment"
 EMOJI = {"negative": "🔴", "neutral": "🟡", "positive": "🟢"}
 BAR_COLOR = {"negative": "#e5484d", "neutral": "#f5a524", "positive": "#30a46c"}
@@ -32,7 +35,8 @@ st.set_page_config(page_title="Pidgin Sentiment Engine", page_icon="🇳🇬", l
 def load_classifier():
     from transformers import pipeline
 
-    return pipeline("text-classification", model=MODEL_ID, top_k=None, device=-1)
+    return pipeline("text-classification", model=MODEL_ID, revision=MODEL_REVISION,
+                    top_k=None, device=-1)
 
 
 def confidence_bars(sentiment):
