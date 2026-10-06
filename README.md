@@ -136,7 +136,7 @@ Group 28, ML/DL Project, TechCrush. Supervisor: Mr Lamzey.
 
 | Member | Role |
 |---|---|
-| **Ezechinyere Nnabugwu Kingsley** ([@Ezechis](https://github.com/Ezechis)) | Project lead: data pipeline, model training and evaluation, web app, deployment, thesis |
+| **Ezechinyere Nnabugwu Kingsley** ([@Ezechis](https://github.com/Ezechis)) | Project lead: sourced the round-1 training data and the NaijaSynCor data; data pipeline, model training and evaluation, web app, deployment, thesis |
 | **Oguche Charles Arome** | Researched and wrote Pidgin training sentences for the second round of training; graded slang as positive, negative or neutral; checked the round-1 labelling sheet |
 | **Caleb Bassey Bassey** | Researched and wrote Pidgin training sentences for the second round of training; graded slang as positive, negative or neutral; checked the round-1 labelling sheet |
 
