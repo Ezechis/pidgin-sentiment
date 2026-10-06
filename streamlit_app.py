@@ -13,9 +13,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "app
 from engine import analyze  # noqa: E402
 
 MODEL_ID = os.environ.get("MODEL_ID", "ezechinnabugwu/pidgin-sentiment-model")
-# Pinned to the round-1 extra-data model (Hub commit of 2026-09-25): later training runs may push
-# weaker models to the same repo, and the app must only change when we deliberately move this pin.
-MODEL_REVISION = os.environ.get("MODEL_REVISION", "049707fb032982cb1e7bc3074e6961a86d3e4ff3")
+# Pinned to the round-2 model (Hub commit of 2026-10-06), chosen on the re-split dev set (notebook
+# section 13). The app must only change when we deliberately move this pin.
+MODEL_REVISION = os.environ.get("MODEL_REVISION", "e9f06b70eff07313906da006b547c2003d8ec7b7")
 REPO_URL = "https://github.com/Ezechis/pidgin-sentiment"
 EMOJI = {"negative": "🔴", "neutral": "🟡", "positive": "🟢"}
 BAR_COLOR = {"negative": "#e5484d", "neutral": "#f5a524", "positive": "#30a46c"}
@@ -110,15 +110,18 @@ with st.expander("About this model"):
 | Intent | Keyword rules (no labelled Pidgin intent dataset exists yet) |
 | Moderation | Whole-word abuse lexicon (insults, curses, threats) |
 
-**Test-set performance** (3,228 held-out tweets, train overlap removed): accuracy 0.625, macro-F1 0.476.
-The deployed model was also trained on 280 extra examples checked by native speakers (about 100 BBC
-News Pidgin sentences and 180 AI-drafted messages), which lifted neutral F1 from 0.00 to 0.14.
-For comparison: TF-IDF baseline 0.428, mBERT 0.422, AfriBERTa without the extra data about 0.43.
+**Test-set performance** (1,614 held-out tweets, train overlap removed; the other half of the test set
+was used only to choose the model): macro-F1 0.528, neutral F1 0.32.
+The deployed model was also trained on 626 extra examples: 280 checked by native speakers (BBC News
+Pidgin sentences and AI-drafted messages), 87 written by volunteers and 260 spoken sentences from the
+NaijaSynCor corpus. Over three training seeds this setup averaged macro-F1 0.537, against 0.481 for the
+previous model trained on the 280 checked examples only.
+For comparison on the full test set: TF-IDF baseline 0.428, mBERT 0.422, AfriBERTa without extra data about 0.43.
 
 Input is normalised the way the training tweets were (lower-case; no URLs, handles, digits,
 punctuation or emoji) before it reaches the model.
 
-**Known limits:** the *neutral* class is still the weakest (about 8% of neutral tweets recognised); sarcasm,
+**Known limits:** the *neutral* class is still the weakest; sarcasm,
 mixed sentiment and complaint phrasings like *"dey use me play"* are often misread.
 Intent and moderation only recognise listed terms.
 
