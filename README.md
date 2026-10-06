@@ -10,6 +10,9 @@ a classical TF-IDF baseline, and serve the best model in a web app. The app also
 - **Live demo:** https://pidgin-sentiment.streamlit.app
 - **Model:** https://huggingface.co/ezechinnabugwu/pidgin-sentiment-model
 
+**Group 28 ML/DL Project.** Built by Ezechinyere Nnabugwu Kingsley (project lead), Oguche Charles
+Arome and Caleb Bassey Bassey. See [Team](#team).
+
 ## What is learned vs. rule-based
 
 | Output | Method | Why |
@@ -59,11 +62,31 @@ They were added to **training only**. The test set is unchanged.
 |---|---|---|---|
 | Original training data | 0.622 | 0.426 | 0.000 |
 | + confidence threshold for neutral (tuned on dev) | 0.622 | 0.429 | 0.009 |
-| **+ 280 checked extra rows (deployed)** | **0.625** | **0.476** | **0.136** |
+| + 280 checked extra rows (round 1) | 0.625 | 0.476 | 0.136 |
 | + extra rows + threshold | 0.618 | 0.479 | 0.156 |
 
-The deployed model was chosen on dev macro-F1 (0.4289 → 0.4342), never on the test set. The same
-original recipe scored 0.434 and 0.426 in two runs, so run-to-run noise is about ±0.01.
+Round 1 was chosen on dev macro-F1 (0.4289 → 0.4342), never on the test set. The same original
+recipe scored 0.434 and 0.426 in two runs, so run-to-run noise is about ±0.01.
+
+### Second round of data and a representative dev set
+
+Round 2 added 87 volunteer-written sentences and 260 sentences sampled from the NaijaSynCor
+spoken-Pidgin treebank (UD_Naija-NSC, CC BY-SA 4.0, labelled from their English translations), on top
+of round 1: 626 extra training rows in all. Over three seeds, round 2 lost on the original dev set but
+won clearly on test. The cause: the original dev set is 1.7% neutral against 13.3% in test, so it
+cannot judge a change that mainly helps neutral.
+
+The cleaned test set was therefore split in half, stratified by label (notebook section 13). The new
+dev half chooses the model; the other half (1,614 tweets) only reports scores.
+
+| Three seeds, mean ± SD | New dev macro-F1 | Held-out test macro-F1 | Held-out test F1 neutral |
+|---|---|---|---|
+| Round 1 (280 extra rows) | 0.502 ± 0.013 | 0.481 ± 0.005 | 0.199 ± 0.058 |
+| **Round 2 (626 extra rows)** | **0.533 ± 0.008** | **0.537 ± 0.008** | **0.337 ± 0.018** |
+
+**Deployed:** the round-2 seed with the best new-dev score (Hub revision `e9f06b70`), macro-F1 0.528
+and neutral F1 0.32 on the held-out half. The app pins this revision (`MODEL_REVISION` in
+`streamlit_app.py`), so a new upload never changes the live model by accident.
 
 Confusion matrices, learning curves and the full error list are produced by the notebook.
 
@@ -98,11 +121,23 @@ pip install pytest && python -m pytest
 
 ## Limitations
 
-- Neutral is barely represented in training (66 tweets), so it is the weakest class.
+- Neutral is barely represented in the original training data (66 tweets) and is still the weakest
+  class. The round-2 model also reads some complaint-requests and curses as neutral
+  ("make una send my token code, e no dey drop", "una go see shege").
 - The dataset authors stripped emoji, punctuation and digits, so the model never sees them.
   The app strips them from input too.
 - Sarcasm and mixed sentiment remain hard; see the notebook's error analysis.
 - Intent and moderation only recognise terms in their lists.
+
+## Team
+
+Group 28, ML/DL Project.
+
+| Member | Role |
+|---|---|
+| **Ezechinyere Nnabugwu Kingsley** ([@Ezechis](https://github.com/Ezechis)) | Project lead: data pipeline, model training and evaluation, web app, deployment, thesis |
+| **Oguche Charles Arome** | Contributor: checked and labelled the extra training data |
+| **Caleb Bassey Bassey** | Contributor: checked and labelled the extra training data |
 
 ## References
 

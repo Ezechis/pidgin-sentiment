@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software or model, please cite it as below."
+title: "Pidgin Sentiment Engine: Fine-Tuning African-Language Transformers for Nigerian Pidgin Sentiment Analysis (Group 28 ML/DL Project)"
+type: software
+authors:
+  - alias: "Ezechinyere Nnabugwu Kingsley (project lead)"
+  - alias: "Oguche Charles Arome"
+  - alias: "Caleb Bassey Bassey"
+repository-code: "https://github.com/Ezechis/pidgin-sentiment"
+url: "https://pidgin-sentiment.streamlit.app"
+date-released: "2026-10-06"

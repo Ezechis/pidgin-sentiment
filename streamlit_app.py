@@ -126,4 +126,7 @@ mixed sentiment and complaint phrasings like *"dey use me play"* are often misre
 Intent and moderation only recognise listed terms.
 
 Source code, training notebook and evaluation: [{REPO_URL}]({REPO_URL})
+
+**Group 28 ML/DL Project:** Ezechinyere Nnabugwu Kingsley (project lead), Oguche Charles Arome,
+Caleb Bassey Bassey.
 """)
