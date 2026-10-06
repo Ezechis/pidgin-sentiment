@@ -70,7 +70,8 @@ recipe scored 0.434 and 0.426 in two runs, so run-to-run noise is about ±0.01.
 
 ### Second round of data and a representative dev set
 
-Round 2 added 87 volunteer-written sentences and 260 sentences sampled from the NaijaSynCor
+Round 2 added 87 sentences researched, written and labelled by group members Oguche Charles Arome
+and Caleb Bassey Bassey, and 260 sentences sampled from the NaijaSynCor
 spoken-Pidgin treebank (UD_Naija-NSC, CC BY-SA 4.0, labelled from their English translations), on top
 of round 1: 626 extra training rows in all. Over three seeds, round 2 lost on the original dev set but
 won clearly on test. The cause: the original dev set is 1.7% neutral against 13.3% in test, so it
@@ -131,13 +132,13 @@ pip install pytest && python -m pytest
 
 ## Team
 
-Group 28, ML/DL Project.
+Group 28, ML/DL Project, TechCrush. Supervisor: Mr Lamzey.
 
 | Member | Role |
 |---|---|
 | **Ezechinyere Nnabugwu Kingsley** ([@Ezechis](https://github.com/Ezechis)) | Project lead: data pipeline, model training and evaluation, web app, deployment, thesis |
-| **Oguche Charles Arome** | Contributor: checked and labelled the extra training data |
-| **Caleb Bassey Bassey** | Contributor: checked and labelled the extra training data |
+| **Oguche Charles Arome** | Researched and wrote Pidgin training sentences for the second round of training; graded slang as positive, negative or neutral; checked the round-1 labelling sheet |
+| **Caleb Bassey Bassey** | Researched and wrote Pidgin training sentences for the second round of training; graded slang as positive, negative or neutral; checked the round-1 labelling sheet |
 
 ## References
 

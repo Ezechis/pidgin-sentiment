@@ -113,7 +113,7 @@ with st.expander("About this model"):
 **Test-set performance** (1,614 held-out tweets, train overlap removed; the other half of the test set
 was used only to choose the model): macro-F1 0.528, neutral F1 0.32.
 The deployed model was also trained on 626 extra examples: 280 checked by native speakers (BBC News
-Pidgin sentences and AI-drafted messages), 87 written by volunteers and 260 spoken sentences from the
+Pidgin sentences and AI-drafted messages), 87 researched and written by group members and 260 spoken sentences from the
 NaijaSynCor corpus. Over three training seeds this setup averaged macro-F1 0.537, against 0.481 for the
 previous model trained on the 280 checked examples only.
 For comparison on the full test set: TF-IDF baseline 0.428, mBERT 0.422, AfriBERTa without extra data about 0.43.
@@ -127,6 +127,6 @@ Intent and moderation only recognise listed terms.
 
 Source code, training notebook and evaluation: [{REPO_URL}]({REPO_URL})
 
-**Group 28 ML/DL Project:** Ezechinyere Nnabugwu Kingsley (project lead), Oguche Charles Arome,
+**Group 28 ML/DL Project, TechCrush (supervisor: Mr Lamzey):** Ezechinyere Nnabugwu Kingsley (project lead), Oguche Charles Arome,
 Caleb Bassey Bassey.
 """)
